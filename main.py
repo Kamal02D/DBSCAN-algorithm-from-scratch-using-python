@@ -86,14 +86,14 @@ def generate_x():
     theta2 = np.linspace(np.pi, 2 * np.pi, num_points)
 
     # generate a random set of radii between 0.5 and 1.5 for each half circle
-    r1 = np.random.uniform(0.5, 1, num_points)
-    r2 = np.random.uniform(0.5, 1, num_points)
+    r1 = np.random.uniform(0.5, 0.8, num_points)
+    r2 = np.random.uniform(0.5, 0.8, num_points)
 
     x1 = r1 * np.cos(theta1) - 1
     y1 = r1 * np.sin(theta1)
 
     x2 = r2 * np.cos(theta2) - 0.2
-    y2 = r2 * np.sin(theta2) + 0.3
+    y2 = r2 * np.sin(theta2) + 0.2
 
     half_circle1 = np.column_stack((x1, y1))
     half_circle2 = np.column_stack((x2, y2))
@@ -109,7 +109,19 @@ if __name__ == "__main__":
     plt.scatter(X[:, 0], X[:, 1])
     plt.title("initial points")
     plt.show()
-    labels = dbscan(X, 0.10, 3)
+    labels = dbscan(X, 0.1, 3)
+
 
     plt.scatter(X[:,0],X[:,1],c=labels)
+    plt.title("DBSCAN result")
     plt.show()
+
+    from sklearn.cluster import KMeans
+    km =  KMeans(n_clusters=2)
+    lbls = km.fit_predict(X)
+
+
+    plt.scatter(X[:,0],X[:,1],c=lbls)
+    plt.title("K-Means result")
+    plt.show()
+
